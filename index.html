@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy Birthday! ❤️</title>
+  <title>Catch Your Birthday Gift! 🎁✨</title>
   <!-- Confetti Engine -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
@@ -13,6 +13,7 @@
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
 
     html, body {
@@ -38,63 +39,118 @@
       height: 100vh;
       background: url('oggy.bg.jpg') no-repeat center center;
       background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       z-index: 10;
       transition: opacity 0.6s ease;
+      overflow: hidden;
     }
 
-    /* EXACT POSITIONED ANIMATED GIFT BOX OVERLAY */
+    /* Counter HUD & Taunt Bubble */
+    .hud-header {
+      position: absolute;
+      top: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 40;
+      pointer-events: none;
+    }
+
+    .attempt-badge {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #c2185b;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+      border: 2px solid #ff80ab;
+    }
+
+    .taunt-bubble {
+      background: #ffe082;
+      color: #b71c1c;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.6); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ESCAPING GIFT BOX */
     .gift-interactive-wrapper {
       position: absolute;
-      top: 57.5%;
-      left: 50.5%;
+      top: 55%;
+      left: 50%;
       transform: translate(-50%, -50%);
-      width: 145px;
-      height: 125px;
+      width: 140px;
+      height: 120px;
       cursor: pointer;
       z-index: 30;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      animation: gentleFloat 2.6s ease-in-out infinite;
+      transition: top 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                  left 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  transform 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .gift-interactive-wrapper.floating {
+      animation: gentleFloat 2.2s ease-in-out infinite;
+    }
+
+    .gift-interactive-wrapper.escaping {
+      animation: crazyWiggle 0.3s ease-in-out;
     }
 
     @keyframes gentleFloat {
-      0%, 100% {
-        transform: translate(-50%, -50%) translateY(0) scale(1);
-        filter: drop-shadow(0 8px 14px rgba(216, 27, 96, 0.45));
-      }
-      50% {
-        transform: translate(-50%, -50%) translateY(-10px) scale(1.04);
-        filter: drop-shadow(0 18px 24px rgba(255, 64, 129, 0.85));
-      }
+      0%, 100% { transform: translate(-50%, -50%) translateY(0) scale(1); }
+      50% { transform: translate(-50%, -50%) translateY(-10px) scale(1.05); }
     }
 
-    /* Pulsing Magic Glow Behind the Gift */
+    @keyframes crazyWiggle {
+      0% { transform: translate(-50%, -50%) rotate(0deg) scale(1.1); }
+      25% { transform: translate(-50%, -50%) rotate(-18deg) scale(1.15); }
+      50% { transform: translate(-50%, -50%) rotate(18deg) scale(1.15); }
+      75% { transform: translate(-50%, -50%) rotate(-12deg) scale(1.1); }
+      100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+    }
+
+    /* Pulsing Magic Glow */
     .gift-aura {
       position: absolute;
-      width: 160px;
-      height: 140px;
+      width: 150px;
+      height: 130px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255, 215, 0, 0.7) 0%, rgba(255, 64, 129, 0.3) 55%, transparent 75%);
-      animation: pulseAura 1.8s ease-in-out infinite;
+      animation: pulseAura 1.5s ease-in-out infinite;
       z-index: -1;
       pointer-events: none;
     }
 
     @keyframes pulseAura {
       0%, 100% { transform: scale(0.9); opacity: 0.7; }
-      50% { transform: scale(1.2); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 1; }
     }
 
-    /* Gift Lid + Bow */
+    /* Gift Lid */
     .gift-lid-box {
       position: relative;
-      width: 154px;
-      height: 38px;
+      width: 145px;
+      height: 35px;
       background: linear-gradient(180deg, #c2185b 0%, #ad1457 100%);
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
@@ -102,20 +158,17 @@
       transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    /* Lid Yellow Ribbon */
     .gift-lid-box::after {
       content: '';
       position: absolute;
       left: 50%;
       top: 0;
       transform: translateX(-50%);
-      width: 28px;
+      width: 26px;
       height: 100%;
       background: linear-gradient(90deg, #ffd700, #ffea00, #ffd700);
-      box-shadow: inset 0 0 4px rgba(0,0,0,0.15);
     }
 
-    /* Red Ribbon Bow on Lid */
     .gift-bow {
       position: absolute;
       top: -16px;
@@ -123,14 +176,13 @@
       transform: translateX(-50%);
       font-size: 24px;
       line-height: 1;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
     }
 
-    /* Gift Bottom Body */
+    /* Gift Body */
     .gift-body-box {
       position: relative;
-      width: 136px;
-      height: 74px;
+      width: 126px;
+      height: 70px;
       margin-top: -3px;
       background: linear-gradient(180deg, #e91e63 0%, #c2185b 100%);
       border-radius: 0 0 14px 14px;
@@ -138,46 +190,41 @@
       overflow: hidden;
     }
 
-    /* Vertical Ribbon */
     .gift-body-box .ribbon-v {
       position: absolute;
       left: 50%;
       top: 0;
       transform: translateX(-50%);
-      width: 28px;
+      width: 26px;
       height: 100%;
       background: linear-gradient(90deg, #ffd700, #ffea00, #ffd700);
-      box-shadow: inset 0 0 4px rgba(0,0,0,0.15);
     }
 
-    /* Horizontal Ribbon */
     .gift-body-box .ribbon-h {
       position: absolute;
       top: 36%;
       left: 0;
       width: 100%;
-      height: 24px;
+      height: 22px;
       background: linear-gradient(180deg, #ffd700, #ffea00, #ffd700);
-      box-shadow: inset 0 0 4px rgba(0,0,0,0.15);
     }
 
-    /* Gift Opening Keyframe Triggers */
+    /* Opening Final Trigger */
     .gift-interactive-wrapper.opening {
       animation: none !important;
     }
 
     .gift-interactive-wrapper.opening .gift-lid-box {
-      transform: translateY(-90px) rotate(-24deg) scale(1.15);
+      transform: translateY(-95px) rotate(-28deg) scale(1.2);
       opacity: 0;
     }
 
     .gift-interactive-wrapper.opening .gift-body-box {
-      transform: scale(1.1);
-      box-shadow: 0 0 45px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 64, 129, 0.9);
-      transition: all 0.5s ease-out;
+      transform: scale(1.15);
+      box-shadow: 0 0 50px rgba(255, 215, 0, 1), 0 0 35px rgba(255, 64, 129, 1);
     }
 
-    /* Floating background hearts/stars */
+    /* Floating background icons */
     .bg-heart {
       position: fixed;
       bottom: -20px;
@@ -193,7 +240,7 @@
       100% { transform: translateY(-105vh) scale(1.2) rotate(360deg); opacity: 0; }
     }
 
-    /* SCREEN 2: Surprise Reveal Card */
+    /* SCREEN 2: Reveal Surprise Card */
     .card-container {
       position: relative;
       z-index: 50;
@@ -271,10 +318,8 @@
       padding: 11px 22px;
       border-radius: 50px;
       box-shadow: 0 6px 18px rgba(233, 30, 99, 0.35);
-      transition: transform 0.2s;
-      cursor: pointer;
       border: none;
-      margin-bottom: 8px;
+      cursor: pointer;
     }
 
     .download-btn:active {
@@ -298,17 +343,20 @@
     <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=happy-birthday-to-you-110057.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- SCREEN 1: Animated Interactive Gift Box positioned over Poster Box -->
+  <!-- SCREEN 1: Escaping Gift Screen -->
   <div id="start-screen">
-    <div class="gift-interactive-wrapper" id="gift-box" onclick="openSurprise()">
+    <div class="hud-header">
+      <div class="attempt-badge" id="attempt-badge">🎁 Tap the box to open! (5 chances left)</div>
+      <div class="taunt-bubble" id="taunt-bubble" style="display: none;"></div>
+    </div>
+
+    <div class="gift-interactive-wrapper floating" id="gift-box" onclick="handleGiftTap()">
       <div class="gift-aura"></div>
       
-      <!-- Animated Lid -->
       <div class="gift-lid-box">
         <div class="gift-bow">🎀</div>
       </div>
 
-      <!-- Box Body -->
       <div class="gift-body-box">
         <div class="ribbon-v"></div>
         <div class="ribbon-h"></div>
@@ -337,6 +385,39 @@
 
   <script>
     const birthdayMessage = "Wishing you a day filled with all the love, happiness, and smiles in the world!\n\nYou are truly special, and I hope this year brings you everything your heart desires. 🎂🎉✨";
+
+    let attemptCount = 0;
+    const maxAttempts = 5;
+    let isMoving = false;
+
+    const taunts = [
+      "😜 Too slow! Try again!",
+      "🏃‍♂️ Woosh! Almost had it!",
+      "✨ Nope! You gotta be quicker than that!",
+      "🔥 One last try... Can you catch me?!",
+      "🎉 YOU GOT IT!"
+    ];
+
+    // Audio SFX synthesis using Web Audio API (No extra asset files needed)
+    function playSfx(type) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'escape') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(750, audioCtx.currentTime + 0.18);
+          gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.18);
+        }
+      } catch (e) {}
+    }
 
     function createHearts() {
       const icons = ['❤️', '💖', '🎈', '✨', '🎂', '🎉', '🌸'];
@@ -383,18 +464,79 @@
       type();
     }
 
+    function handleGiftTap() {
+      if (isMoving) return;
+      attemptCount++;
+
+      const giftBox = document.getElementById('gift-box');
+      const badge = document.getElementById('attempt-badge');
+      const tauntBubble = document.getElementById('taunt-bubble');
+
+      // Attempt 1 to 4: Escape to a random screen coordinate
+      if (attemptCount < maxAttempts) {
+        isMoving = true;
+        playSfx('escape');
+
+        // Show playful taunt
+        tauntBubble.textContent = taunts[attemptCount - 1];
+        tauntBubble.style.display = 'block';
+
+        const remaining = maxAttempts - attemptCount;
+        badge.textContent = `⚡ Catch it! (${remaining} chance${remaining > 1 ? 's' : ''} left)`;
+
+        // Calculate safe viewport boundaries (15% to 80% margins)
+        const safeMinX = 20;
+        const safeMaxX = 80;
+        const safeMinY = 25;
+        const safeMaxY = 78;
+
+        const newX = Math.floor(Math.random() * (safeMaxX - safeMinX + 1)) + safeMinX;
+        const newY = Math.floor(Math.random() * (safeMaxY - safeMinY + 1)) + safeMinY;
+
+        giftBox.classList.remove('floating');
+        giftBox.classList.add('escaping');
+        
+        giftBox.style.left = `${newX}%`;
+        giftBox.style.top = `${newY}%`;
+
+        // Small puff of mini confetti on jump
+        confetti({
+          particleCount: 15,
+          spread: 50,
+          origin: { x: newX / 100, y: newY / 100 }
+        });
+
+        setTimeout(() => {
+          giftBox.classList.remove('escaping');
+          giftBox.classList.add('floating');
+          isMoving = false;
+        }, 360);
+
+      } else {
+        // 5th Attempt: Finally opens!
+        tauntBubble.textContent = taunts[4];
+        badge.textContent = "🎉 Opening your surprise!";
+        openSurprise();
+      }
+    }
+
     function openSurprise() {
       const giftBox = document.getElementById('gift-box');
+      giftBox.classList.remove('floating', 'escaping');
       giftBox.classList.add('opening');
 
       const audio = document.getElementById('birthday-audio');
       if (audio) audio.play().catch(() => {});
 
-      // Burst confetti from the center of the gift box
+      const rect = giftBox.getBoundingClientRect();
+      const originX = (rect.left + rect.width / 2) / window.innerWidth;
+      const originY = (rect.top + rect.height / 2) / window.innerHeight;
+
+      // Burst confetti from current position
       confetti({
-        particleCount: 80,
+        particleCount: 90,
         spread: 100,
-        origin: { y: 0.58 }
+        origin: { x: originX, y: originY }
       });
 
       setTimeout(() => {
