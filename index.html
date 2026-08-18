@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday! ❤️</title>
-  <!-- Confetti library -->
+  <!-- Confetti Engine -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
@@ -15,79 +15,37 @@
     }
 
     body {
-      background: linear-gradient(135deg, #ffeef2 0%, #ffd6e5 50%, #fec8d8 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      overflow-x: hidden;
       text-align: center;
-      padding: 20px 10px;
+      padding: 15px;
+      /* Full seamless Oggy cartoon poster background */
+      background: #ffc0cb url('oggy-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
       position: relative;
     }
 
-    /* Animated Cartoon Stickers */
-    .cartoon-sticker {
+    /* Soft overlay for better contrast */
+    body::before {
+      content: '';
       position: fixed;
+      inset: 0;
+      background: rgba(255, 192, 203, 0.2);
+      z-index: 1;
       pointer-events: none;
-      z-index: 5;
-      border-radius: 16px;
-      border: 3px solid #ffffff;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
-      object-fit: cover;
     }
 
-    /* 1. Cheering Oggy & Cockroaches (Top Right) */
-    .char-cheer {
-      top: 3%;
-      right: 3%;
-      width: 150px;
-      height: 150px;
-      animation: cheerMotion 4s ease-in-out infinite alternate;
-    }
-
-    /* 2. Oggy running with Birthday Cake (Bottom Left) */
-    .char-cake {
-      bottom: 3%;
-      left: 3%;
-      width: 170px;
-      height: 115px;
-      animation: cakeMotion 3.2s ease-in-out infinite alternate;
-    }
-
-    /* 3. Bob, Olivia & Cockroach stack (Bottom Right) */
-    .char-stack {
-      bottom: 3%;
-      right: 3%;
-      width: 125px;
-      height: 170px;
-      animation: stackMotion 4.2s ease-in-out infinite alternate;
-    }
-
-    @keyframes cheerMotion {
-      0% { transform: translateY(0) rotate(-3deg) scale(1); }
-      100% { transform: translateY(-16px) rotate(4deg) scale(1.05); }
-    }
-
-    @keyframes cakeMotion {
-      0% { transform: translateX(0) rotate(0deg); }
-      50% { transform: translateX(14px) rotate(3deg); }
-      100% { transform: translateX(0) rotate(-3deg); }
-    }
-
-    @keyframes stackMotion {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-14px) scale(1.04); }
-    }
-
-    /* Floating party confetti & hearts */
+    /* Floating celebration hearts */
     .bg-heart {
       position: fixed;
       bottom: -20px;
       font-size: 22px;
-      opacity: 0.7;
+      opacity: 0.75;
       animation: floatUp linear infinite;
-      z-index: 2;
+      z-index: 3;
       pointer-events: none;
     }
 
@@ -100,31 +58,39 @@
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 440px;
+      max-width: 420px;
       margin: auto;
     }
 
-    /* SCREEN 1: Gift Box */
+    /* SCREEN 1: Interactive Animated Gift Box */
     #start-screen {
       transition: all 0.5s ease;
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(5px);
-      padding: 24px 16px;
-      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      padding: 28px 20px;
+      border-radius: 28px;
+      box-shadow: 0 15px 35px rgba(194, 24, 91, 0.25);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      animation: gentlePulse 3s infinite ease-in-out;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
     }
 
     h1.title {
-      font-size: 2.3rem;
-      color: #d6336c;
-      margin-bottom: 8px;
-      text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.8);
+      font-size: 2.1rem;
+      color: #c2185b;
+      margin-bottom: 6px;
+      font-weight: 800;
     }
 
     p.subtitle {
-      font-size: 1.1rem;
-      color: #5e1488;
+      font-size: 1.05rem;
+      color: #6a1b9a;
       font-weight: 600;
-      margin-bottom: 24px;
+      margin-bottom: 25px;
     }
 
     .gift-container {
@@ -140,9 +106,9 @@
       bottom: 0;
       width: 155px;
       height: 108px;
-      background: #e91e63;
+      background: linear-gradient(135deg, #e91e63, #d81b60);
       border-radius: 0 0 14px 14px;
-      box-shadow: 0 12px 28px rgba(233, 30, 99, 0.4);
+      box-shadow: 0 12px 28px rgba(233, 30, 99, 0.45);
       position: relative;
     }
 
@@ -152,11 +118,11 @@
       left: -10px;
       width: 175px;
       height: 34px;
-      background: #c2185b;
+      background: linear-gradient(135deg, #c2185b, #ad1457);
       border-radius: 8px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
       z-index: 5;
-      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       transform-origin: left bottom;
     }
 
@@ -167,7 +133,7 @@
       transform: translateX(-50%);
       width: 26px;
       height: 100%;
-      background: #ffd700;
+      background: linear-gradient(to right, #ffd700, #ffeb3b, #ffd700);
     }
 
     .ribbon-h {
@@ -177,7 +143,7 @@
       transform: translateY(-50%);
       width: 100%;
       height: 24px;
-      background: #ffd700;
+      background: linear-gradient(to bottom, #ffd700, #ffeb3b, #ffd700);
     }
 
     .bow {
@@ -189,30 +155,31 @@
     }
 
     .tap-hint {
-      font-size: 1.1rem;
-      color: #b71540;
+      font-size: 1.05rem;
+      color: #ad1457;
       font-weight: 700;
       animation: bounce 1.4s infinite;
     }
 
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-7px); }
+      50% { transform: translateY(-8px); }
     }
 
-    /* SCREEN 2: Revealed Card */
+    /* SCREEN 2: Surprise Reveal Card */
     #surprise-card {
       display: none;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
       padding: 24px 20px;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      border: 3px solid rgba(255, 255, 255, 0.9);
       animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
     @keyframes zoomIn {
-      0% { transform: scale(0.5) translateY(40px); opacity: 0; }
+      0% { transform: scale(0.4) translateY(50px); opacity: 0; }
       100% { transform: scale(1) translateY(0); opacity: 1; }
     }
 
@@ -221,10 +188,10 @@
       width: 100%;
       max-width: 290px;
       margin: 0 auto 16px;
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 6px;
       background: linear-gradient(135deg, #ff4081, #ffd700, #ff80ab);
-      box-shadow: 0 10px 25px rgba(255, 64, 129, 0.3);
+      box-shadow: 0 12px 28px rgba(255, 64, 129, 0.35);
     }
 
     .photo-wrapper img {
@@ -232,16 +199,16 @@
       height: auto;
       max-height: 340px;
       object-fit: cover;
-      border-radius: 14px;
+      border-radius: 16px;
       display: block;
       background: #fff;
     }
 
     .recipient-name {
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       color: #c2185b;
       margin-bottom: 10px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .message-box {
@@ -250,7 +217,7 @@
       color: #444;
       background: #fff0f5;
       padding: 14px 16px;
-      border-radius: 14px;
+      border-radius: 16px;
       margin-bottom: 18px;
       text-align: left;
       white-space: pre-wrap;
@@ -264,11 +231,11 @@
       background: linear-gradient(135deg, #e91e63, #d81b60);
       color: #ffffff;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.98rem;
       padding: 12px 24px;
       border-radius: 50px;
-      box-shadow: 0 6px 16px rgba(233, 30, 99, 0.35);
+      box-shadow: 0 6px 18px rgba(233, 30, 99, 0.35);
       transition: transform 0.2s;
       cursor: pointer;
       border: none;
@@ -282,30 +249,14 @@
     .signature {
       font-size: 1.05rem;
       color: #ad1457;
-      font-weight: 600;
+      font-weight: 700;
       margin-top: 10px;
       opacity: 0;
       transition: opacity 0.8s ease;
     }
-
-    /* Mobile screen responsive sizes */
-    @media (max-width: 650px) {
-      .char-cheer { width: 95px; height: 95px; top: 1.5%; right: 1.5%; }
-      .char-cake { width: 110px; height: 75px; bottom: 1.5%; left: 1.5%; }
-      .char-stack { width: 85px; height: 115px; bottom: 1.5%; right: 1.5%; }
-    }
   </style>
 </head>
 <body>
-
-  <!-- Cartoon Character 1: Cheering Oggy & Cockroaches -->
-  <img src="oggy-cheer.jpg" alt="Oggy Cheering" class="cartoon-sticker char-cheer">
-
-  <!-- Cartoon Character 2: Oggy Carrying Birthday Cake -->
-  <img src="oggy-cake.jpg" alt="Oggy Cake" class="cartoon-sticker char-cake">
-
-  <!-- Cartoon Character 3: Bob, Olivia & Cockroach Stack -->
-  <img src="oggy-stack.jpg" alt="Oggy Stack" class="cartoon-sticker char-stack">
 
   <!-- Background Music -->
   <audio id="birthday-audio" preload="auto" loop>
@@ -313,7 +264,7 @@
   </audio>
 
   <div class="container">
-    <!-- Initial Screen: Closed Gift -->
+    <!-- Initial Screen: Closed Gift Box with Oggy Background -->
     <div id="start-screen">
       <h1 class="title">Happy Birthday ❤️</h1>
       <p class="subtitle">A special surprise is waiting for you...</p>
@@ -354,7 +305,7 @@
   <script>
     const birthdayMessage = "Wishing you a day filled with all the love, happiness, and smiles in the world!\n\nYou are truly special, and I hope this year brings you everything your heart desires. 🎂🎉✨";
 
-    // Floating background celebration icons
+    // Floating celebration elements
     function createHearts() {
       const icons = ['❤️', '💖', '🎈', '✨', '🎂', '🎉', '🌸'];
       for (let i = 0; i < 20; i++) {
