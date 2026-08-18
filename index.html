@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday! ❤️</title>
-  <!-- Confetti Engine -->
+  <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
@@ -22,30 +22,20 @@
       overflow-x: hidden;
       text-align: center;
       padding: 15px;
-      /* Full seamless Oggy cartoon poster background */
-      background: #ffc0cb url('oggy-bg.jpg') no-repeat center center fixed;
+      /* Direct PNG poster background */
+      background: #ffc0cb url('oggy-bg.png') no-repeat center center fixed;
       background-size: cover;
       position: relative;
     }
 
-    /* Soft overlay for better contrast */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: rgba(255, 192, 203, 0.2);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Floating celebration hearts */
+    /* Floating party hearts */
     .bg-heart {
       position: fixed;
       bottom: -20px;
       font-size: 22px;
       opacity: 0.75;
       animation: floatUp linear infinite;
-      z-index: 3;
+      z-index: 2;
       pointer-events: none;
     }
 
@@ -62,16 +52,16 @@
       margin: auto;
     }
 
-    /* SCREEN 1: Interactive Animated Gift Box */
+    /* SCREEN 1: Interactive Gift Box */
     #start-screen {
       transition: all 0.5s ease;
       background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(10px);
-      padding: 28px 20px;
-      border-radius: 28px;
-      box-shadow: 0 15px 35px rgba(194, 24, 91, 0.25);
-      border: 2px solid rgba(255, 255, 255, 0.9);
-      animation: gentlePulse 3s infinite ease-in-out;
+      backdrop-filter: blur(8px);
+      padding: 26px 18px;
+      border-radius: 26px;
+      box-shadow: 0 16px 36px rgba(194, 24, 91, 0.28);
+      border: 3px solid rgba(255, 255, 255, 0.95);
+      animation: gentlePulse 2.8s infinite ease-in-out;
     }
 
     @keyframes gentlePulse {
@@ -88,9 +78,9 @@
 
     p.subtitle {
       font-size: 1.05rem;
-      color: #6a1b9a;
+      color: #5e1488;
       font-weight: 600;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
     }
 
     .gift-container {
@@ -169,12 +159,12 @@
     /* SCREEN 2: Surprise Reveal Card */
     #surprise-card {
       display: none;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(12px);
       border-radius: 28px;
       padding: 24px 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-      border: 3px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+      border: 3px solid rgba(255, 255, 255, 0.95);
       animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
@@ -264,7 +254,7 @@
   </audio>
 
   <div class="container">
-    <!-- Initial Screen: Closed Gift Box with Oggy Background -->
+    <!-- Initial Screen: Closed Gift Box -->
     <div id="start-screen">
       <h1 class="title">Happy Birthday ❤️</h1>
       <p class="subtitle">A special surprise is waiting for you...</p>
@@ -283,7 +273,7 @@
       <div class="tap-hint">👇 Tap the gift to open it</div>
     </div>
 
-    <!-- Surprise Screen: Photo + Message + Download -->
+    <!-- Surprise Screen: Her Photo + Message + Download Button -->
     <div id="surprise-card">
       <div class="photo-wrapper">
         <img id="reveal-image" src="her-photo.jpg" alt="Birthday Special">
@@ -293,7 +283,6 @@
 
       <div class="message-box" id="typewriter-text"></div>
 
-      <!-- Instant Download Button -->
       <a id="download-link" href="her-photo.jpg" download="birthday-special.jpg" class="download-btn">
         📥 Download Photo
       </a>
@@ -305,7 +294,6 @@
   <script>
     const birthdayMessage = "Wishing you a day filled with all the love, happiness, and smiles in the world!\n\nYou are truly special, and I hope this year brings you everything your heart desires. 🎂🎉✨";
 
-    // Floating celebration elements
     function createHearts() {
       const icons = ['❤️', '💖', '🎈', '✨', '🎂', '🎉', '🌸'];
       for (let i = 0; i < 20; i++) {
@@ -320,7 +308,6 @@
     }
     createHearts();
 
-    // Confetti shower
     function fireConfetti() {
       const duration = 3.5 * 1000;
       const animationEnd = Date.now() + duration;
@@ -331,7 +318,6 @@
       }, 220);
     }
 
-    // Typewriter effect
     function typeMessage(text, elementId, speed = 35) {
       let index = 0;
       const target = document.getElementById(elementId);
@@ -348,7 +334,6 @@
       type();
     }
 
-    // Gift Opening Transition
     function openSurprise() {
       const audio = document.getElementById('birthday-audio');
       if (audio) audio.play().catch(() => {});
