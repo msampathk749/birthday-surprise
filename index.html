@@ -15,7 +15,7 @@
     }
 
     body {
-      background: linear-gradient(135deg, #ffeef2 0%, #ffd1dc 50%, #ffc0cb 100%);
+      background: linear-gradient(135deg, #ffebf3 0%, #ffd6e5 50%, #fec8d8 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -23,9 +23,71 @@
       overflow-x: hidden;
       text-align: center;
       padding: 20px 10px;
+      position: relative;
     }
 
-    /* Floating background hearts */
+    /* Animated Oggy cartoon characters */
+    .cartoon-char {
+      position: fixed;
+      pointer-events: none;
+      z-index: 2;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
+    }
+
+    /* Top Right: Cheering Oggy & Cockroaches */
+    .char-oggy-cheer {
+      top: 2%;
+      right: 2%;
+      width: 145px;
+      animation: cheerFloat 4s ease-in-out infinite alternate;
+    }
+
+    /* Bottom Left: Oggy running with the giant cake */
+    .char-oggy-cake {
+      bottom: 2%;
+      left: 1%;
+      width: 160px;
+      animation: cakeWiggle 3.5s ease-in-out infinite alternate;
+    }
+
+    /* Bottom Right: Bob, Olivia & Cockroach stack */
+    .char-oggy-stack {
+      bottom: 1%;
+      right: 2%;
+      width: 130px;
+      animation: stackBounce 4.5s ease-in-out infinite alternate;
+    }
+
+    /* Top Left: Cockroach Joey sneaking in */
+    .char-cockroach-corner {
+      top: 2%;
+      left: 2%;
+      width: 85px;
+      animation: sneakyFloat 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes cheerFloat {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      100% { transform: translateY(-14px) rotate(4deg) scale(1.04); }
+    }
+
+    @keyframes cakeWiggle {
+      0% { transform: translateX(0) rotate(0deg); }
+      50% { transform: translateX(12px) rotate(3deg); }
+      100% { transform: translateX(0) rotate(-2deg); }
+    }
+
+    @keyframes stackBounce {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-12px) scale(1.03); }
+    }
+
+    @keyframes sneakyFloat {
+      0% { transform: translateY(0) rotate(-5deg); }
+      100% { transform: translateY(10px) rotate(8deg); }
+    }
+
+    /* Floating background hearts & party icons */
     .bg-heart {
       position: fixed;
       bottom: -20px;
@@ -52,36 +114,42 @@
     /* SCREEN 1: Gift Box */
     #start-screen {
       transition: all 0.5s ease;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(4px);
+      padding: 24px 16px;
+      border-radius: 24px;
     }
 
     h1.title {
-      font-size: 2.1rem;
+      font-size: 2.3rem;
       color: #d6336c;
       margin-bottom: 8px;
+      text-shadow: 1px 1px 4px rgba(255,255,255,0.8);
     }
 
     p.subtitle {
-      font-size: 1.05rem;
-      color: #6a1b9a;
-      margin-bottom: 30px;
+      font-size: 1.1rem;
+      color: #5e1488;
+      font-weight: 600;
+      margin-bottom: 24px;
     }
 
     .gift-container {
       position: relative;
-      width: 150px;
-      height: 130px;
-      margin: 20px auto 30px;
+      width: 155px;
+      height: 135px;
+      margin: 15px auto 25px;
       cursor: pointer;
     }
 
     .gift-box {
       position: absolute;
       bottom: 0;
-      width: 150px;
-      height: 105px;
+      width: 155px;
+      height: 108px;
       background: #e91e63;
-      border-radius: 0 0 12px 12px;
-      box-shadow: 0 12px 25px rgba(233, 30, 99, 0.35);
+      border-radius: 0 0 14px 14px;
+      box-shadow: 0 12px 28px rgba(233, 30, 99, 0.4);
       position: relative;
     }
 
@@ -89,11 +157,11 @@
       position: absolute;
       top: 0;
       left: -10px;
-      width: 170px;
-      height: 32px;
+      width: 175px;
+      height: 34px;
       background: #c2185b;
       border-radius: 8px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
       z-index: 5;
       transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       transform-origin: left bottom;
@@ -121,32 +189,32 @@
 
     .bow {
       position: absolute;
-      top: -22px;
+      top: -24px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 32px;
+      font-size: 34px;
     }
 
     .tap-hint {
-      font-size: 1.05rem;
-      color: #d81b60;
-      font-weight: 600;
+      font-size: 1.1rem;
+      color: #b71540;
+      font-weight: 700;
       animation: bounce 1.4s infinite;
     }
 
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+      50% { transform: translateY(-7px); }
     }
 
     /* SCREEN 2: Revealed Card */
     #surprise-card {
       display: none;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
       border-radius: 24px;
       padding: 24px 20px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
       animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
@@ -195,7 +263,6 @@
       white-space: pre-wrap;
     }
 
-    /* Download Button */
     .download-btn {
       display: inline-flex;
       align-items: center;
@@ -209,7 +276,7 @@
       padding: 12px 24px;
       border-radius: 50px;
       box-shadow: 0 6px 16px rgba(233, 30, 99, 0.35);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s;
       cursor: pointer;
       border: none;
       margin-bottom: 10px;
@@ -227,9 +294,37 @@
       opacity: 0;
       transition: opacity 0.8s ease;
     }
+
+    /* Mobile adjustments for cartoon size */
+    @media (max-width: 600px) {
+      .char-oggy-cheer { width: 100px; top: 1%; right: 1%; }
+      .char-oggy-cake { width: 110px; bottom: 1%; left: 1%; }
+      .char-oggy-stack { width: 90px; bottom: 1%; right: 1%; }
+      .char-cockroach-corner { width: 60px; top: 1%; left: 1%; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Cartoon Character 1: Cheering Oggy & Cockroaches (Top Right) -->
+  <img src="https://static.wikia.nocookie.net/oggyandthecockroaches/images/3/36/Season_4_poster.png" 
+       alt="Oggy Cheering" class="cartoon-char char-oggy-cheer" 
+       onerror="this.src='https://assets.stickpng.com/images/580b57fbd9996e24bc43c08f.png'">
+
+  <!-- Cartoon Character 2: Oggy with Birthday Cake (Bottom Left) -->
+  <img src="https://static.wikia.nocookie.net/oggyandthecockroaches/images/d/df/Oggy_Birthday_Cake.png" 
+       alt="Oggy with Cake" class="cartoon-char char-oggy-cake" 
+       onerror="this.src='https://assets.stickpng.com/images/580b57fbd9996e24bc43c08f.png'">
+
+  <!-- Cartoon Character 3: Jack & Bob Stack (Bottom Right) -->
+  <img src="https://static.wikia.nocookie.net/oggyandthecockroaches/images/a/a2/Oggy_and_Jack_Stack.png" 
+       alt="Oggy Friends" class="cartoon-char char-oggy-stack" 
+       onerror="this.src='https://assets.stickpng.com/images/580b57fbd9996e24bc43c090.png'">
+
+  <!-- Cartoon Character 4: Dee Dee / Cockroach (Top Left) -->
+  <img src="https://static.wikia.nocookie.net/oggyandthecockroaches/images/4/47/Dee_Dee_art.png" 
+       alt="Dee Dee" class="cartoon-char char-cockroach-corner" 
+       onerror="this.src='https://assets.stickpng.com/images/580b57fbd9996e24bc43c090.png'">
 
   <!-- Background Music -->
   <audio id="birthday-audio" preload="auto" loop>
@@ -256,7 +351,7 @@
       <div class="tap-hint">👇 Tap the gift to open it</div>
     </div>
 
-    <!-- Surprise Screen: Clear Photo + Message + Download -->
+    <!-- Surprise Screen: Photo + Message + Download -->
     <div id="surprise-card">
       <div class="photo-wrapper">
         <img id="reveal-image" src="her-photo.jpg" alt="Birthday Special" onerror="this.src='https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600'">
@@ -278,10 +373,10 @@
   <script>
     const birthdayMessage = "Wishing you a day filled with all the love, happiness, and smiles in the world!\n\nYou are truly special, and I hope this year brings you everything your heart desires. 🎂🎉✨";
 
-    // Floating background hearts generator
+    // Floating background hearts & party emojis
     function createHearts() {
-      const icons = ['❤️', '💖', '💕', '✨', '🌸'];
-      for (let i = 0; i < 16; i++) {
+      const icons = ['❤️', '💖', '🎈', '✨', '🎂', '🎉'];
+      for (let i = 0; i < 18; i++) {
         const heart = document.createElement('div');
         heart.className = 'bg-heart';
         heart.innerText = icons[Math.floor(Math.random() * icons.length)];
@@ -300,8 +395,8 @@
       const interval = setInterval(function() {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) return clearInterval(interval);
-        confetti({ particleCount: 35, spread: 360, startVelocity: 30, origin: { x: Math.random() * 0.8 + 0.1, y: Math.random() - 0.2 } });
-      }, 250);
+        confetti({ particleCount: 40, spread: 360, startVelocity: 35, origin: { x: Math.random() * 0.8 + 0.1, y: Math.random() - 0.2 } });
+      }, 220);
     }
 
     // Typewriter effect
