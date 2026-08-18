@@ -1,341 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Happy Birthday ❤️</title>
-
-<style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: "Poppins", Arial, sans-serif;
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    color: #fff;
-}
-
-.container {
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
-    padding: 25px;
-    position: relative;
-    z-index: 2;
-}
-
-h1 {
-    font-size: 42px;
-    margin: 0 0 10px;
-    text-shadow: 0 3px 10px rgba(0,0,0,.2);
-}
-
-.subtitle {
-    font-size: 18px;
-    margin-bottom: 35px;
-}
-
-.gift-area {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    margin: auto;
-    cursor: pointer;
-}
-
-/* Gift box */
-.gift {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    width: 180px;
-    height: 130px;
-    background: #e63963;
-    border-radius: 8px;
-    box-shadow: 0 15px 30px rgba(0,0,0,.25);
-}
-
-/* Vertical ribbon */
-.gift::before {
-    content: "";
-    position: absolute;
-    width: 35px;
-    height: 130px;
-    background: #ffd166;
-    left: 72px;
-}
-
-/* Gift lid */
-.lid {
-    position: absolute;
-    width: 200px;
-    height: 45px;
-    background: #d62855;
-    left: 10px;
-    top: 35px;
-    border-radius: 8px;
-    z-index: 5;
-    transition: .8s ease;
-}
-
-/* Lid ribbon */
-.lid::after {
-    content: "";
-    position: absolute;
-    width: 35px;
-    height: 45px;
-    background: #ffd166;
-    left: 82px;
-}
-
-/* Bow */
-.bow-left,
-.bow-right {
-    position: absolute;
-    width: 55px;
-    height: 40px;
-    background: #ffd166;
-    top: 5px;
-    border-radius: 50%;
-    z-index: 6;
-}
-
-.bow-left {
-    left: 48px;
-    transform: rotate(-25deg);
-}
-
-.bow-right {
-    right: 48px;
-    transform: rotate(25deg);
-}
-
-/* Picture */
-.photo {
-    position: absolute;
-    width: 110px;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 12px;
-    left: 55px;
-    top: 20px;
-    opacity: 0;
-    transform: translateY(30px) scale(.5);
-    transition: 1s ease;
-    box-shadow: 0 8px 25px rgba(0,0,0,.35);
-    z-index: 3;
-    border: 5px solid white;
-}
-
-/* Open animation */
-.gift-area.open .lid {
-    transform: translateY(-95px) rotate(-5deg);
-}
-
-.gift-area.open .bow-left,
-.gift-area.open .bow-right {
-    transform: translateY(-95px);
-    transition: .8s ease;
-}
-
-.gift-area.open .photo {
-    opacity: 1;
-    transform: translateY(-100px) scale(1);
-}
-
-.click-text {
-    margin-top: 15px;
-    font-size: 16px;
-    animation: pulse 1.5s infinite;
-}
-
-.message {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: 1s ease;
-    margin-top: 25px;
-    pointer-events: none;
-}
-
-.message.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.message h2 {
-    font-size: 30px;
-    margin: 10px 0;
-}
-
-.message p {
-    font-size: 17px;
-    line-height: 1.7;
-}
-
-.heart {
-    position: fixed;
-    font-size: 25px;
-    animation: fall linear forwards;
-    pointer-events: none;
-}
-
-@keyframes pulse {
-    50% {
-        transform: scale(1.08);
-    }
-}
-
-@keyframes fall {
-    from {
-        transform: translateY(-50px) rotate(0deg);
-        opacity: 1;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! ❤️</title>
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    to {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-@media(max-width:450px) {
-
-    h1 {
-        font-size: 34px;
-    }
-
-    .subtitle {
-        font-size: 16px;
+    body {
+      background: linear-gradient(135deg, #ffeef2 0%, #ffd1dc 50%, #ffc0cb 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      text-align: center;
+      padding: 20px 10px;
     }
 
-    .gift-area {
-        transform: scale(.9);
+    /* Floating background hearts */
+    .bg-heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 22px;
+      opacity: 0.6;
+      animation: floatUp linear infinite;
+      z-index: 1;
+      pointer-events: none;
     }
 
-    .message h2 {
-        font-size: 25px;
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(-110vh) scale(1.2) rotate(360deg); opacity: 0; }
     }
-}
-</style>
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 440px;
+      margin: auto;
+    }
+
+    /* SCREEN 1: Gift Box */
+    #start-screen {
+      transition: all 0.5s ease;
+    }
+
+    h1.title {
+      font-size: 2.1rem;
+      color: #d6336c;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      font-size: 1.05rem;
+      color: #6a1b9a;
+      margin-bottom: 30px;
+    }
+
+    .gift-container {
+      position: relative;
+      width: 150px;
+      height: 130px;
+      margin: 20px auto 30px;
+      cursor: pointer;
+    }
+
+    .gift-box {
+      position: absolute;
+      bottom: 0;
+      width: 150px;
+      height: 105px;
+      background: #e91e63;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 12px 25px rgba(233, 30, 99, 0.35);
+      position: relative;
+    }
+
+    .gift-lid {
+      position: absolute;
+      top: 0;
+      left: -10px;
+      width: 170px;
+      height: 32px;
+      background: #c2185b;
+      border-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      z-index: 5;
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-origin: left bottom;
+    }
+
+    .ribbon-v {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 26px;
+      height: 100%;
+      background: #ffd700;
+    }
+
+    .ribbon-h {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 24px;
+      background: #ffd700;
+    }
+
+    .bow {
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+    }
+
+    .tap-hint {
+      font-size: 1.05rem;
+      color: #d81b60;
+      font-weight: 600;
+      animation: bounce 1.4s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* SCREEN 2: Revealed Card */
+    #surprise-card {
+      display: none;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+      animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes zoomIn {
+      0% { transform: scale(0.5) translateY(40px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .photo-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 290px;
+      margin: 0 auto 16px;
+      border-radius: 18px;
+      padding: 6px;
+      background: linear-gradient(135deg, #ff4081, #ffd700, #ff80ab);
+      box-shadow: 0 10px 25px rgba(255, 64, 129, 0.3);
+    }
+
+    .photo-wrapper img {
+      width: 100%;
+      height: auto;
+      max-height: 340px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      background: #fff;
+    }
+
+    .recipient-name {
+      font-size: 1.6rem;
+      color: #c2185b;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .message-box {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+      background: #fff0f5;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+
+    /* Download Button */
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #e91e63, #d81b60);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.98rem;
+      padding: 12px 24px;
+      border-radius: 50px;
+      box-shadow: 0 6px 16px rgba(233, 30, 99, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: none;
+      margin-bottom: 10px;
+    }
+
+    .download-btn:active {
+      transform: scale(0.96);
+    }
+
+    .signature {
+      font-size: 1.05rem;
+      color: #ad1457;
+      font-weight: 600;
+      margin-top: 10px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+  <!-- Background Music -->
+  <audio id="birthday-audio" preload="auto" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=happy-birthday-to-you-110057.mp3" type="audio/mpeg">
+  </audio>
 
-    <h1>Happy Birthday ❤️</h1>
+  <div class="container">
+    <!-- Initial Screen: Closed Gift -->
+    <div id="start-screen">
+      <h1 class="title">Happy Birthday ❤️</h1>
+      <p class="subtitle">A special surprise is waiting for you...</p>
 
-    <div class="subtitle">
-        A little surprise is waiting for you... 🎁
+      <div class="gift-container" onclick="openSurprise()">
+        <div class="gift-lid" id="gift-lid">
+          <div class="bow">🎀</div>
+          <div class="ribbon-v"></div>
+        </div>
+        <div class="gift-box">
+          <div class="ribbon-v"></div>
+          <div class="ribbon-h"></div>
+        </div>
+      </div>
+
+      <div class="tap-hint">👇 Tap the gift to open it</div>
     </div>
 
-    <div class="gift-area" id="gift">
+    <!-- Surprise Screen: Clear Photo + Message + Download -->
+    <div id="surprise-card">
+      <div class="photo-wrapper">
+        <img id="reveal-image" src="her-photo.jpg" alt="Birthday Special" onerror="this.src='https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600'">
+      </div>
 
-        <!-- Replace her-photo.jpg with your picture -->
-        <img src="her-photo.jpg" class="photo" id="photo">
+      <h2 class="recipient-name">Happy Birthday, My Special Person ❤️</h2>
 
-        <div class="gift"></div>
+      <div class="message-box" id="typewriter-text"></div>
 
-        <div class="lid"></div>
+      <!-- Instant Download Button -->
+      <a id="download-link" href="her-photo.jpg" download="birthday-special.jpg" class="download-btn">
+        📥 Download Photo
+      </a>
 
-        <div class="bow-left"></div>
-        <div class="bow-right"></div>
-
+      <div class="signature" id="card-signature">With all my love ❤️✨</div>
     </div>
+  </div>
 
-    <div class="click-text">
-        👆 Tap the gift to open it
-    </div>
+  <script>
+    const birthdayMessage = "Wishing you a day filled with all the love, happiness, and smiles in the world!\n\nYou are truly special, and I hope this year brings you everything your heart desires. 🎂🎉✨";
 
-    <div class="message" id="message">
-
-        <h2>🎉 Happy Birthday, My Special Person ❤️</h2>
-
-        <p>
-            Today is a beautiful day because it's the day
-            someone very special was born. 💕
-        </p>
-
-        <p>
-            I hope your birthday is filled with happiness,
-            beautiful memories, endless smiles and everything
-            your heart wishes for. ✨
-        </p>
-
-        <p>
-            You are truly special to me. ❤️
-        </p>
-
-        <h2>🎂 Have a Wonderful Birthday! 🎂</h2>
-
-    </div>
-
-</div>
-
-
-<script>
-
-const gift = document.getElementById("gift");
-const message = document.getElementById("message");
-
-let opened = false;
-
-gift.addEventListener("click", function() {
-
-    if (opened) return;
-
-    opened = true;
-
-    gift.classList.add("open");
-
-    setTimeout(() => {
-        message.classList.add("show");
-    }, 700);
-
+    // Floating background hearts generator
+    function createHearts() {
+      const icons = ['❤️', '💖', '💕', '✨', '🌸'];
+      for (let i = 0; i < 16; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'bg-heart';
+        heart.innerText = icons[Math.floor(Math.random() * icons.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        heart.style.animationDelay = (Math.random() * 4) + 's';
+        document.body.appendChild(heart);
+      }
+    }
     createHearts();
 
-});
-
-
-function createHearts() {
-
-    for(let i = 0; i < 40; i++) {
-
-        const heart = document.createElement("div");
-
-        heart.className = "heart";
-
-        heart.innerHTML =
-            ["❤️","💕","💖","💗","✨","🎉"][Math.floor(Math.random()*6)];
-
-        heart.style.left =
-            Math.random() * 100 + "vw";
-
-        heart.style.top = "-30px";
-
-        heart.style.animationDuration =
-            (3 + Math.random() * 4) + "s";
-
-        heart.style.fontSize =
-            (15 + Math.random() * 25) + "px";
-
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-            heart.remove();
-        }, 7000);
+    // Confetti effect
+    function fireConfetti() {
+      const duration = 3.5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(interval);
+        confetti({ particleCount: 35, spread: 360, startVelocity: 30, origin: { x: Math.random() * 0.8 + 0.1, y: Math.random() - 0.2 } });
+      }, 250);
     }
 
-}
+    // Typewriter effect
+    function typeMessage(text, elementId, speed = 35) {
+      let index = 0;
+      const target = document.getElementById(elementId);
+      target.textContent = '';
+      function type() {
+        if (index < text.length) {
+          target.textContent += text.charAt(index);
+          index++;
+          setTimeout(type, speed);
+        } else {
+          document.getElementById('card-signature').style.opacity = '1';
+        }
+      }
+      type();
+    }
 
-</script>
+    // Gift Opening Transition
+    function openSurprise() {
+      const audio = document.getElementById('birthday-audio');
+      if (audio) audio.play().catch(() => {});
 
+      // Pop open the lid
+      const lid = document.getElementById('gift-lid');
+      lid.style.transform = 'translate(-35px, -70px) rotate(-35deg)';
+
+      fireConfetti();
+
+      // Switch to the full surprise card
+      setTimeout(() => {
+        document.getElementById('start-screen').style.display = 'none';
+        const card = document.getElementById('surprise-card');
+        card.style.display = 'block';
+        typeMessage(birthdayMessage, 'typewriter-text', 40);
+      }, 600);
+    }
+  </script>
 </body>
 </html>
